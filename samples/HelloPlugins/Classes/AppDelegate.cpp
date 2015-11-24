@@ -29,7 +29,11 @@ bool AppDelegate::applicationDidFinishLaunching() {
     auto size = director->getWinSize();
 
     // Set the design resolution
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN)
+    glView->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::SHOW_ALL);
+#else
     glView->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::NO_BORDER);
+#endif
 
 	Size frameSize = glView->getFrameSize();
     

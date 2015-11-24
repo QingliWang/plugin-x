@@ -24,7 +24,11 @@ THE SOFTWARE.
 #include "TestIAPScene.h"
 #include "PluginManager.h"
 #include "AppDelegate.h"
+#ifndef TIZEN
 #include "MyPurchase.h"
+#else
+#include "TizenIapScene.h"
+#endif
 #include "HelloWorldScene.h"
 #include "ui/CocosGUI.h"
 
@@ -34,6 +38,11 @@ using namespace cocos2d::ui;
 
 Scene* TestIAP::scene()
 {
+#ifdef TIZEN
+    //Load plugins
+    return CTizenIapScene::scene();
+#endif
+
     Scene *scene = Scene::create();
     TestIAP *layer = TestIAP::create();
 
@@ -49,7 +58,7 @@ bool TestIAP::init()
     {
         return false;
     }
-
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_TIZEN)
     //Load plugins
     MyPurchase::getInstance()->loadIAPPlugin();
 
@@ -87,6 +96,7 @@ bool TestIAP::init()
 
     });
     panel->addChild(btnGoogle);    
+#endif
 
 
     return true;
